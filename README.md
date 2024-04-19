@@ -6,8 +6,9 @@
 
 ## Goal
 
-This project is a poc on June. June is a SaaS created to analyze product through event.  
+This project is a poc on June. June is a SaaS created to analyze product through event. June let you easy track anything happing on your frontend or backend, you can group user into group with an API quite easy to integrate to any project.
 I made this poc using `Nx` to create the structure of the project, I used `React` and the `@june-so` package.
+I also made a second POC to see how it's done on the backend part. I made an `express` project and the result is quite similar to the frontend version.
 
 ## Plan of the presentation
 
@@ -21,6 +22,9 @@ I explain with all the details how I build the project and my way of working.
 - [Links](#links)
 
 ## Development
+
+There is two project: frontjune and backjune.
+I made one project for testing to integrate June with React and another one for testing the integration with Express.
 
 #### Setting up June
 
