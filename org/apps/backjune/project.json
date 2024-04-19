@@ -1,0 +1,24 @@
+{
+  "name": "backjune",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/backjune/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "backjune:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "backjune:build:development"
+        },
+        "production": {
+          "buildTarget": "backjune:build:production"
+        }
+      }
+    }
+  }
+}
