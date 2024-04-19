@@ -1,0 +1,32 @@
+.app {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    gap: 32px;
+
+    &__cardrow {
+        flex-direction: column;
+    }
+
+    &__cardrow,
+    &__card {
+        padding: 24px;
+        border: 1px solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+        position: relative;
+
+        &__title {
+            position: absolute;
+            top: 0;
+            transform: translateY(-50%);
+            background: white;
+            padding: 0 10px;
+        }
+    }
+}
