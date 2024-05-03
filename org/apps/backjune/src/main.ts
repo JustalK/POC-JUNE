@@ -5,10 +5,17 @@
 
 import express from 'express';
 import * as path from 'path';
+import { Analytics as BaseAnalytics } from '@segment/analytics-node';
 import { Analytics } from '@june-so/analytics-node';
 import bodyParser from 'body-parser';
 
-const analytics = new Analytics('wpdpi6qyHu0VDkr7');
+const writeKey = 'wpdpi6qyHu0VDkr7';
+const analytics = new Analytics(writeKey);
+const analyticsSegment = new BaseAnalytics({
+  writeKey,
+  host: 'https://api.june.so',
+  path: '/sdk/batch',
+});
 const app = express();
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
@@ -33,6 +40,20 @@ app.post('/identify', (req, res) => {
     },
   });
   res.send({ message: `User identified! ID: ${id} | name: ${name}` });
+});
+
+app.post('/segment/identify', (req, res) => {
+  const { id, email, name } = req.body;
+  analyticsSegment.identify({
+    userId: id,
+    traits: {
+      email: email,
+      name: name,
+    },
+  });
+  res.send({
+    message: `User identified by Segment! ID: ${id} | name: ${name}`,
+  });
 });
 
 /**
