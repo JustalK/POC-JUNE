@@ -145,6 +145,63 @@ Once the data is saved, you can get report with some filter such as on email:
 
 ![5.png](./documentation/images/5.png)
 
+## How does it work?
+
+#### Segment
+
+By looking in the library of June, I discovered that they are using the track library Segment from twilio for the node version one.
+June simply created an endpoint to received the result on https://api.june.so/sdk/batch.
+This is quite clever since they are in this case not really wasting resources on the library to keep up with the evolution of node.
+But at the same time, they are heavily relaying on another compagny to generously shared their library.
+
+So if I want to reduce a bit the size of my node_module, I can directly use the segment library instead of embedding it. However, it requires to pay attention to the evolution of their library in case for example, their change their endpoint.
+
+```js
+import { Analytics as BaseAnalytics } from '@segment/analytics-node';
+
+const analyticsSegment = new BaseAnalytics({
+  writeKey,
+  host: 'https://api.june.so',
+  path: '/sdk/batch',
+});
+```
+
+And from here, I can use the library the same way as it described in the documentation.
+
+```js
+  analyticsSegment.identify({
+    userId: id,
+    traits: {
+      email: email,
+      name: name,
+    },
+  });
+```
+
+The logic is quite the same for the front version but instead of using the `@segment/analytics-node`, they are using the `@segment/analytics-next`.
+
+#### Queue
+
+By testing multiple thing, I notice there is delay between the moment I track an event on the application.  
+I suspect them to use a queue to be able to handle everything on a single endpoint. I try to flood it a bit but everything get tracked as it should be.
+It's logic to have such a queue and certainly a dead queue at this point but I wanted to point it out.  
+Multiple time during my test I wondered if my event was really tracked or not as  sometime I waited 5min before it shows up on their client.
+
+#### Model
+
+This part is only hypothetical in case I want to reproduce their analytical product for my own project.  
+I dont think it's too complexe. Their website has a lot of functionnality but most of them are not necessary for a developper.  
+From a database, a developper can extract whatever filtered information he want easily from a query. 
+Going around, if I have to make such a product, I will certainly design the database this way:
+
+![schema.png](./documentation/images/schema.png)
+
+June has another level on top of group which is workspace. But in my own product, I dont really that level of separation.
+
+#### Third Party Connection
+
+June also has multi connection to third party such as Slack to make some alert on event and Hubspot to scrap some information or send email.
+
 ## Running
 
 In the terminal, type the following command:
